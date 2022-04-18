@@ -7,7 +7,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class VendingMachineCLI {
-	//FINAL
+
 	private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
 	private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
 	private static final String MAIN_MENU_OPTION_EXIT = "Exit";
@@ -49,7 +49,7 @@ public class VendingMachineCLI {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-				// display vending machine items
+				// display product inventory
 				inv.displayInventory();
 
 
@@ -95,6 +95,7 @@ public class VendingMachineCLI {
 						case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
 							//return change using smallest amount of coins
 							//update current balance to $0
+//							pos.calculateChange();
 							System.out.println(pos.calculateChange());
 
 							isPurchasing = false;

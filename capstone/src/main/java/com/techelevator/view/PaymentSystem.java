@@ -1,5 +1,10 @@
 package com.techelevator.view;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
+import static com.techelevator.view.Currency.*;
+
 public class PaymentSystem {
 
 
@@ -20,40 +25,43 @@ public class PaymentSystem {
         PurchaseLog.log("FEED MONEY: ", dollar.getValue(), currentBalance);
     }
 
-//TODO uncomment if you remove dispense method from this class
 //    public void subtractMoney(double coins) {
 //        currentBalance -= coins;
 ////        System.out.println("Your change is $" + String.format("%,.2f", currentBalance));
 //    }
 
-    public String calculateChange() {
-        double balanceBeforeChange = currentBalance;
-        int numberOfQuarters = 0;
-        int numberOfDimes = 0;
-        int numberOfNickels = 0;
+//        public void calculateChange() {
+//        double startingBalance = currentBalance;
+//        int numberOfQuarters = 0;
+//        int numberOfDimes = 0;
+//        int numberOfNickels = 0;
+//
+//        while (currentBalance > 0) {
+//            if (currentBalance >= Currency.QUARTER.getValue()) {
+//                currentBalance -= Currency.QUARTER.getValue();
+//                numberOfQuarters++;
+//            }
+//            else if (currentBalance >= Currency.DIME.getValue()) {
+//                currentBalance -= Currency.DIME.getValue();
+//                numberOfDimes++;
+//            }
+//            else if (currentBalance >= Currency.NICKEL.getValue()) {
+//                currentBalance -= Currency.NICKEL.getValue();
+//                numberOfNickels++;
+//            }
+//        }
+//        System.out.println("Your change is: ");
+//        System.out.println("[" + numberOfQuarters +"]" + " quarter(s)");
+//        System.out.println("[" + numberOfDimes +"]" + " dime(s)");
+//        System.out.println("[" + numberOfNickels +"]" + " nickel(s)");
+//        System.out.println("Balance: " + String.format("%,.2f", currentBalance) + "Actual" + currentBalance);
+//        PurchaseLog.log("GIVE CHANGE: ", startingBalance, currentBalance);
+//    }
 
-        while (currentBalance > 0) {
-            if (currentBalance >= Currency.QUARTER.getValue()) {
-                currentBalance -= Math.round(Currency.QUARTER.getValue());
-                numberOfQuarters++;
-            } else if (currentBalance >= Currency.DIME.getValue()) {
-                currentBalance -= Math.round(Currency.DIME.getValue());
-                numberOfDimes++;
-            } else if (currentBalance >= Currency.NICKEL.getValue()) {
-                currentBalance -= Math.round(Currency.NICKEL.getValue());
-                numberOfNickels++;
-            }
-        }
-        PurchaseLog.log("GIVE CHANGE: ", balanceBeforeChange, currentBalance);
-        return "Your change is:\n"
-                + "[" + numberOfQuarters + "]" + " quarter(s)\n"
-                + "[" + numberOfDimes + "]" + " dime(s)\n"
-                + "[" + numberOfNickels + "]" + " nickel(s)\n"
-                + "Balance: " + String.format("%,.2f", currentBalance) + "Actual" + currentBalance;
-    }
 
 
 //    public void calculateChange() {
+//       double balanceBeforeChange = currentBalance;
 //        int changeDue = (int) currentBalance * 100;
 //        int numberOfQuarters = 0;
 //        int numberOfDimes = 0;
@@ -82,6 +90,33 @@ public class PaymentSystem {
 //        PurchaseLog.log("GIVE CHANGE: ", balanceBeforeChange, currentBalance);
 //    }
 
+    public String calculateChange() {
+        double balanceBeforeChange = currentBalance;
+        DecimalFormat df = new DecimalFormat(".##");
+        int numberOfQuarters = 0;
+        int numberOfDimes = 0;
+        int numberOfNickels = 0;
+
+        if (currentBalance > 0) {
+            numberOfQuarters = (int)(currentBalance / QUARTER.getValue());
+            currentBalance = Double.parseDouble(df.format(currentBalance % QUARTER.getValue()));
+            numberOfDimes = (int)(currentBalance / DIME.getValue());
+            currentBalance = Double.parseDouble(df.format(currentBalance % DIME.getValue()));
+            numberOfNickels = (int)(currentBalance / NICKEL.getValue());
+            currentBalance = Double.parseDouble(df.format(currentBalance % NICKEL.getValue()));
+
+            PurchaseLog.log("GIVE CHANGE: ", balanceBeforeChange, currentBalance);
+        }
+
+        return "Your change is: \n" +
+                "[" + numberOfQuarters +"]" + " quarter(s)\n"
+                + "[" + numberOfDimes +"]" + " dime(s)\n"
+                + "[" + numberOfNickels +"]" + " nickel(s)\n"
+                + "Balance: $" + String.format("%,.2f", currentBalance);
+    }
+
+
+
     public void dispenseProduct(Product product) {
 
         if (product.getQuantity() == 0) {
@@ -98,33 +133,3 @@ public class PaymentSystem {
         }
     }
 }
-
-
-//    public void calculateChange() {
-//        double startingBalance = currentBalance;
-//        int numberOfQuarters = 0;
-//        int numberOfDimes = 0;
-//        int numberOfNickels = 0;
-//
-//        while (currentBalance > 0) {
-//            if (currentBalance >= Currency.QUARTER.getValue()) {
-//                currentBalance -= Currency.QUARTER.getValue();
-//                numberOfQuarters++;
-//            }
-//            else if (currentBalance >= Currency.DIME.getValue()) {
-//                currentBalance -= Currency.DIME.getValue();
-//                numberOfDimes++;
-//            }
-//            else if (currentBalance >= Currency.NICKEL.getValue()) {
-//                currentBalance -= Currency.NICKEL.getValue();
-//                numberOfNickels++;
-//            }
-//        }
-//        System.out.println("Your change is: ");
-//        System.out.println("[" + numberOfQuarters +"]" + " quarter(s)");
-//        System.out.println("[" + numberOfDimes +"]" + " dime(s)");
-//        System.out.println("[" + numberOfNickels +"]" + " nickel(s)");
-//        System.out.println("Balance: " + String.format("%,.2f", currentBalance) + "Actual" + currentBalance);
-//        PurchaseLog.log("GIVE CHANGE: ", startingBalance, currentBalance);
-//    }
-

@@ -51,12 +51,4 @@ public class Menu {
 		out.flush();
 	}
 
-	private String displayWelcome() {
-		return "*******************************\n"
-				+ "Welcome to the Vendo-Matic 800\n"
-				+ "*******************************\n";
-//		System.out.println("*******************************");
-//		System.out.printf("Welcome to the Vendo-Matic 800\n");
-//		System.out.println("*******************************");
-	}
 }
