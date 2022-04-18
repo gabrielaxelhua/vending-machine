@@ -37,9 +37,9 @@ public class VendingMachineCLI {
 		PaymentSystem pos = new PaymentSystem();
 		Inventory inv = new Inventory();
 
-		System.out.println("*******************************");
-		System.out.printf("Welcome to the Vendo-Matic 800\n");
-		System.out.println("*******************************");
+		System.out.println("********************************");
+		System.out.printf(" Welcome to the Vendo-Matic 800\n");
+		System.out.println("********************************");
 
 
 
